@@ -11,6 +11,14 @@ export default function PokemonRanking(props: {
   setRankBy: Dispatch<SetStateAction<RankMethod>>
   rankBy: RankMethod
 }) {
+  const methodToSetCheckbox: Partial<Record<RankMethod, Dispatch<SetStateAction<boolean>>>> = {
+    [RankMethod.LAST_MODIFICATION]: props.setShowLastModification,
+    [RankMethod.POKEDEX_NUMBER]: props.setShowIndex,
+    [RankMethod.PORTRAIT_AUTHOR]: props.setPortraitAuthor,
+    [RankMethod.SPRITE_AUTHOR]: props.setSpriteAuthor,
+    [RankMethod.PORTRAIT_BOUNTY]: props.setShowPortraitBounty,
+    [RankMethod.SPRITE_BOUNTY]: props.setShowSpriteBounty,
+  };
   return (
     <div
       className="nes-select is-inline sort"
@@ -21,28 +29,19 @@ export default function PokemonRanking(props: {
         style={{ borderWidth: "2px", height: "40px", fontSize: "0.7em" }}
         value={props.rankBy}
         id="default_select"
-        onChange={(e) => {
-          const rankMethod = e.target.value as RankMethod
-          const methodToSetCheckbox: Partial<Record<RankMethod, Dispatch<SetStateAction<boolean>>>> = {
-            [RankMethod.LAST_MODIFICATION]: props.setShowLastModification,
-            [RankMethod.POKEDEX_NUMBER]: props.setShowIndex,
-            [RankMethod.PORTRAIT_AUTHOR]: props.setPortraitAuthor,
-            [RankMethod.SPRITE_AUTHOR]: props.setSpriteAuthor,
-            [RankMethod.PORTRAIT_BOUNTY]: props.setShowPortraitBounty,
-            [RankMethod.SPRITE_BOUNTY]: props.setShowSpriteBounty,
-          };
+        onChange={option => {
+          const rankMethod = option.target.value as RankMethod
           methodToSetCheckbox[rankMethod]?.(true);
-
           props.setRankBy(rankMethod);
         }}
       >
-        {(Object.values(RankMethod) as RankMethod[]).map((r) => (
+        {(Object.values(RankMethod) as RankMethod[]).map(rankMethod => (
           <option
             style={{ fontSize: "1.5em", fontFamily: "Press Start 2P" }}
-            key={r}
-            value={r}
+            key={rankMethod}
+            value={rankMethod}
           >
-            {r}
+            {rankMethod}
           </option>
         ))}
       </select>

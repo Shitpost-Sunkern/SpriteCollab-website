@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { ReactElement } from "react"
 import { Link } from "react-router-dom"
 import { Monster } from "../generated/graphql"
+import { getMonsterMaxPortraitBounty, getMonsterMaxSpriteBounty, formatDate } from "../util"
 
 export default function PokemonThumbnail(props: {
   info: Monster
@@ -14,100 +15,57 @@ export default function PokemonThumbnail(props: {
   showPortraitBounty: boolean
   showSpriteBounty: boolean
 }) {
-  let image: ReactElement | null = null
-  let date: ReactElement | null = null
-  let index: ReactElement | null = null
-  let portraitAuthor: ReactElement | null = null
-  let spriteAuthor: ReactElement | null = null
-  let portraitBounty: ReactElement | null = null
-  let spriteBounty: ReactElement | null = null
+  const image: ReactElement | null = props.info.manual?.portraits.previewEmotion?.url ?
+    <img
+      className="my-img"
+      alt=""
+      src={props.info.manual.portraits.previewEmotion?.url}
+    /> :
+    <h1 style={{ height: "80px", margin: "0px" }}>?</h1>;
 
-  if (props.showPortraitAuthor) {
-    portraitAuthor = (
-      <p style={{ fontSize: "0.55em", margin: "0px" }}>
-        {props.info?.manual?.portraits?.creditPrimary?.name}
+  const date: ReactElement | null = props.showLastModification ?
+    <p style={{ fontSize: "0.45em", margin: "0px" }}>
+      {formatDate(Math.max(
+        new Date(props.info.manual?.portraits.modifiedDate).getTime(),
+        new Date(props.info.manual?.sprites.modifiedDate).getTime()
+      ))}
+    </p> : null;
+
+  const index: ReactElement | null = props.showIndex ?
+    <p style={{ fontSize: "0.55em", margin: "0px" }}>{props.infoKey}</p> : null;
+
+  const portraitAuthor: ReactElement | null = props.showPortraitAuthor ?
+    <p style={{ fontSize: "0.55em", margin: "0px" }}>
+      {props.info?.manual?.portraits?.creditPrimary?.name}
+    </p> : null;
+
+  const spriteAuthor: ReactElement | null = props.showSpriteAuthor ?
+    <p style={{ fontSize: "0.55em", margin: "0px" }}>
+      {props.info.manual?.sprites.creditPrimary?.name}
+    </p> : null;
+
+  const portraitBounty: ReactElement | null = props.showPortraitBounty ?
+    <div style={{ display: "flex" }}>
+      <p style={{ margin: "0px", fontSize: "0.55em", marginRight: "2px" }}>
+        {
+          getMonsterMaxPortraitBounty(props.info)
+        }
       </p>
-    )
-  }
+      <FontAwesomeIcon icon={faCoins} size="xs" />
+    </div> : null;
 
-  if (props.showSpriteAuthor) {
-    spriteAuthor = (
-      <p style={{ fontSize: "0.55em", margin: "0px" }}>
-        {props.info.manual?.sprites.creditPrimary?.name}
+  const spriteBounty: ReactElement | null = props.showSpriteBounty ?
+    <div style={{ display: "flex" }}>
+      <p style={{ margin: "0px", fontSize: "0.55em", marginRight: "2px" }}>
+        {getMonsterMaxSpriteBounty(props.info)}
       </p>
-    )
-  }
-
-  if (props.showIndex) {
-    index = <p style={{ fontSize: "0.55em", margin: "0px" }}>{props.infoKey}</p>
-  }
-
-  if (props.showLastModification) {
-    const portraitDate = new Date(props.info.manual?.portraits.modifiedDate)
-    const spriteDate = new Date(props.info.manual?.sprites.modifiedDate)
-    date = (
-      <p style={{ fontSize: "0.45em", margin: "0px" }}>
-        {formatDate(Math.max(portraitDate.getTime(), spriteDate.getTime()))}
-      </p>
-    )
-  }
-
-  if (props.showPortraitBounty) {
-    const bounties = new Array<number>()
-    props.info.forms.forEach((f) => {
-      f.portraits.bounty.exists
-        ? bounties.push(f.portraits.bounty.exists)
-        : null
-      f.portraits.bounty.full ? bounties.push(f.portraits.bounty.full) : null
-      f.portraits.bounty.incomplete
-        ? bounties.push(f.portraits.bounty.incomplete)
-        : null
-    })
-    portraitBounty = (
-      <div style={{ display: "flex" }}>
-        <p style={{ margin: "0px", fontSize: "0.55em", marginRight: "2px" }}>
-          {bounties.length > 0 ? Math.max(...bounties) : 0}
-        </p>
-        <FontAwesomeIcon icon={faCoins} size="xs" />
-      </div>
-    )
-  }
-
-  if (props.showSpriteBounty) {
-    const bounties = new Array<number>()
-    props.info.forms.forEach((f) => {
-      f.sprites.bounty.exists ? bounties.push(f.sprites.bounty.exists) : null
-      f.sprites.bounty.full ? bounties.push(f.sprites.bounty.full) : null
-      f.sprites.bounty.incomplete
-        ? bounties.push(f.sprites.bounty.incomplete)
-        : null
-    })
-    spriteBounty = (
-      <div style={{ display: "flex" }}>
-        <p style={{ margin: "0px", fontSize: "0.55em", marginRight: "2px" }}>
-          {bounties.length > 0 ? Math.max(...bounties) : 0}
-        </p>
-        <FontAwesomeIcon icon={faCoins} size="xs" />
-      </div>
-    )
-  }
-
-  if (props.info.manual?.portraits.previewEmotion?.url) {
-    image = (
-      <img
-        className="my-img"
-        alt=""
-        src={props.info.manual.portraits.previewEmotion?.url}
-      />
-    )
-  } else {
-    image = <h1 style={{ height: "80px", margin: "0px" }}>?</h1>
-  }
+      <FontAwesomeIcon icon={faCoins} size="xs" />
+    </div> : null;
 
   return (
     <Link to={props.infoKey.toString()} className="my-link">
       <div
-        className="my-container nes-container nes-pointer grow"
+        className="nes-container nes-pointer grow my-container"
         style={{
           display: "flex",
           flexFlow: "column",
@@ -130,24 +88,3 @@ export default function PokemonThumbnail(props: {
   )
 }
 
-export function formatDate(n: number | undefined) {
-  if (n) {
-    const date = new Date(n)
-    return (
-      pad(date.getDate()) +
-      "/" +
-      pad(date.getMonth() + 1) +
-      "/" +
-      date.getFullYear()
-    )
-  } else {
-    return ""
-  }
-}
-
-export function pad(number: number) {
-  if (number < 10) {
-    return "0" + number
-  }
-  return number
-}

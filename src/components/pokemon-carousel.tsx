@@ -2,7 +2,29 @@
 import { useEffect, useState } from "react"
 import { Monster, useCarrouselQuery } from "../generated/graphql"
 import { RankMethod, REQUEST_ITEMS_SIZE } from "../types/enum"
+import { getMonsterMaxPortraitBounty, getMonsterMaxSpriteBounty } from "../util"
 import PokemonThumbnail from "./pokemon-thumbnail"
+
+const rankMethodToRankFunction: Record<RankMethod, (a: Monster, b: Monster) => number> = {
+  [RankMethod.POKEDEX_NUMBER]: (a, b) => a.id - b.id,
+  [RankMethod.LAST_MODIFICATION]: (a, b) => {
+    const dap = new Date(a.manual?.portraits.modifiedDate);
+    const dbp = new Date(b.manual?.portraits.modifiedDate);
+    const das = new Date(a.manual?.sprites.modifiedDate);
+    const dbs = new Date(b.manual?.sprites.modifiedDate);
+    return Math.max(dbp.getTime(), dbs.getTime()) -
+      Math.max(dap.getTime(), das.getTime());
+  },
+  [RankMethod.NAME]: (a, b) => a.name?.localeCompare(b.name),
+  [RankMethod.PORTRAIT_AUTHOR]: (a, b) => a.manual?.portraits.creditPrimary?.name
+    ?.localeCompare(b.manual?.portraits.creditPrimary?.name ?? "") ?? 0,
+  [RankMethod.SPRITE_AUTHOR]: (a, b) => a.manual?.sprites.creditPrimary?.name
+    ?.localeCompare(b.manual?.sprites.creditPrimary?.name ?? "") ?? 0,
+  [RankMethod.PORTRAIT_BOUNTY]: (a, b) =>
+    getMonsterMaxPortraitBounty(b) - getMonsterMaxPortraitBounty(a),
+  [RankMethod.SPRITE_BOUNTY]: (a, b) =>
+    getMonsterMaxSpriteBounty(b) - getMonsterMaxSpriteBounty(a),
+}
 
 export default function PokemonCarousel(props: {
   currentText: string
@@ -27,12 +49,12 @@ export default function PokemonCarousel(props: {
 
   useEffect(() => {
     if (data && data.monster.length > 0) {
-      const ms = [...monsters]
-      ;(data?.monster as Monster[]).forEach((m) => ms.push(m))
+      const ms = [...monsters];
+      (data?.monster as Monster[]).forEach(monster => ms.push(monster))
       setMonsters(ms)
     }
 
-    if (data && data.monster && index <= props.ids.length) {
+    if (data?.monster && index <= props.ids.length) {
       setIndex(index + REQUEST_ITEMS_SIZE)
       fetchMore({
         variables: {
@@ -42,8 +64,8 @@ export default function PokemonCarousel(props: {
     }
   }, [data, index, props.ids, fetchMore])
 
-  if (loading && monsters.length == 0) return <p>loading...</p>
-  if (error) return <p>Error</p>
+  if (loading && !monsters.length) return <p>loading...</p>;
+  if (error) return <p>Error</p>;
 
   const lowerCaseText = props.currentText.toLowerCase()
   return (
@@ -56,19 +78,14 @@ export default function PokemonCarousel(props: {
         overflowX: "hidden"
       }}
     >
-      {monsters
-        .filter(
-          (k) =>
-            k?.name?.toLowerCase().includes(lowerCaseText) ||
-            k?.manual?.portraits?.creditPrimary?.name
-              ?.toLowerCase()
-              .includes(lowerCaseText) ||
-            k?.manual?.portraits?.creditPrimary?.name
-              ?.toLowerCase()
-              .includes(lowerCaseText) ||
-            k?.id.toString().includes(lowerCaseText)
-        )
-        .sort((a, b) => rankFunction(props.rankBy, a as Monster, b as Monster))
+      {monsters.filter(k =>
+        k?.name?.toLowerCase().includes(lowerCaseText) ||
+        k?.manual?.portraits?.creditPrimary?.name
+          ?.toLowerCase()
+          .includes(lowerCaseText) ||
+        k?.id.toString().includes(lowerCaseText)
+      )
+        .sort((a, b) => rankMethodToRankFunction[props.rankBy]?.(a as Monster, b as Monster) ?? 0)
         .map((k) => (
           <PokemonThumbnail
             key={k.id}
@@ -84,93 +101,4 @@ export default function PokemonCarousel(props: {
         ))}
     </div>
   )
-}
-
-function rankFunction(rankBy: RankMethod, a: Monster, b: Monster): number {
-  let result: number | undefined = 0
-  const aBounties = new Array<number>()
-  const bBounties = new Array<number>()
-  switch (rankBy) {
-    case RankMethod.POKEDEX_NUMBER:
-      result = a.id - b.id
-      break
-
-    case RankMethod.LAST_MODIFICATION:
-      const dap = new Date(a.manual?.portraits.modifiedDate)
-      const dbp = new Date(b.manual?.portraits.modifiedDate)
-      const das = new Date(a.manual?.sprites.modifiedDate)
-      const dbs = new Date(b.manual?.sprites.modifiedDate)
-      result =
-        Math.max(dbp.getTime(), dbs.getTime()) -
-        Math.max(dap.getTime(), das.getTime())
-      break
-
-    case RankMethod.NAME:
-      result = a.name?.localeCompare(b.name)
-      break
-
-    case RankMethod.PORTRAIT_AUTHOR:
-      result = a.manual?.portraits?.creditPrimary?.name?.localeCompare(
-        b.manual?.portraits?.creditPrimary?.name
-          ? b.manual?.portraits?.creditPrimary?.name
-          : ""
-      )
-      break
-
-    case RankMethod.SPRITE_AUTHOR:
-      result = a.manual?.sprites?.creditPrimary?.name?.localeCompare(
-        b.manual?.sprites?.creditPrimary?.name
-          ? b.manual?.sprites?.creditPrimary?.name
-          : ""
-      )
-      break
-
-    case RankMethod.PORTRAIT_BOUNTY:
-      a.forms.forEach((f) => {
-        f.portraits.bounty.exists
-          ? aBounties.push(f.portraits.bounty.exists)
-          : null
-        f.portraits.bounty.full ? aBounties.push(f.portraits.bounty.full) : null
-        f.portraits.bounty.incomplete
-          ? aBounties.push(f.portraits.bounty.incomplete)
-          : null
-      })
-
-      b.forms.forEach((f) => {
-        f.portraits.bounty.exists
-          ? bBounties.push(f.portraits.bounty.exists)
-          : null
-        f.portraits.bounty.full ? bBounties.push(f.portraits.bounty.full) : null
-        f.portraits.bounty.incomplete
-          ? bBounties.push(f.portraits.bounty.incomplete)
-          : null
-      })
-      result = Math.max(...bBounties) - Math.max(...aBounties)
-      break
-
-    case RankMethod.SPRITE_BOUNTY:
-      a.forms.forEach((f) => {
-        f.sprites.bounty.exists ? aBounties.push(f.sprites.bounty.exists) : null
-        f.sprites.bounty.full ? aBounties.push(f.sprites.bounty.full) : null
-        f.sprites.bounty.incomplete
-          ? aBounties.push(f.sprites.bounty.incomplete)
-          : null
-      })
-
-      b.forms.forEach((f) => {
-        f.sprites.bounty.exists ? bBounties.push(f.sprites.bounty.exists) : null
-        f.sprites.bounty.full ? bBounties.push(f.sprites.bounty.full) : null
-        f.sprites.bounty.incomplete
-          ? bBounties.push(f.sprites.bounty.incomplete)
-          : null
-      })
-      result = Math.max(...bBounties) - Math.max(...aBounties)
-      break
-
-    default:
-      result = 0
-      break
-  }
-  const r = result ? result : 0
-  return r
 }

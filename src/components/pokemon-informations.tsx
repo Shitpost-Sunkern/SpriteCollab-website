@@ -1,6 +1,6 @@
 import Credits from "./credits"
 import Emotions from "./emotions"
-import { formatDate } from "./pokemon-thumbnail"
+import { getLastModification } from "../util"
 import SpritePreview from "./sprite-preview"
 import { Dungeon } from "../types/enum"
 import { useRef } from "react"
@@ -16,12 +16,8 @@ export default function PokemonInformations(props: {
       Math.floor(Math.random() * Object.keys(Dungeon).length)
     ] as Dungeon
   )
-  const portraitDate = props.info.portraits.modifiedDate
-    ? new Date(props.info.portraits.modifiedDate)
-    : undefined
-  const spriteDate = props.info.sprites.modifiedDate
-    ? new Date(props.info.sprites.modifiedDate)
-    : undefined
+  const portraitDate = props.info.portraits.modifiedDate && new Date(props.info.portraits.modifiedDate)
+  const spriteDate = props.info.sprites.modifiedDate && new Date(props.info.sprites.modifiedDate)
   const portraitSheetUrl = props.info.portraits.sheetUrl ? (
     <a
       target="_blank"
@@ -32,7 +28,7 @@ export default function PokemonInformations(props: {
     >
       Download all portraits
     </a>
-  ) : null
+  ) : null;
   const portraitRecolorSheetUrl = props.info.portraits.recolorSheetUrl ? (
     <a
       target="_blank"
@@ -43,7 +39,7 @@ export default function PokemonInformations(props: {
     >
       Download recolor portraits
     </a>
-  ) : null
+  ) : null;
   const zipUrl = props.info.sprites.zipUrl ? (
     <a
       target="_blank"
@@ -54,7 +50,7 @@ export default function PokemonInformations(props: {
     >
       Download all sprites
     </a>
-  ) : null
+  ) : null;
   const spriteRecolorSheetUrl = props.info.sprites.recolorSheetUrl ? (
     <a
       target="_blank"
@@ -65,7 +61,7 @@ export default function PokemonInformations(props: {
     >
       Download recolor sprites
     </a>
-  ) : null
+  ) : null;
   return (
     <div>
       <div
@@ -105,9 +101,7 @@ export default function PokemonInformations(props: {
       {props.info.portraits.emotions.length !== 0 ? (
         <Emotions
           emotions={props.info.portraits.emotions.concat(
-            props.info.portraits.emotionsFlipped
-              ? props.info.portraits.emotionsFlipped
-              : []
+            props.info.portraits.emotionsFlipped ?? []
           )}
         />
       ) : (
@@ -165,11 +159,4 @@ export default function PokemonInformations(props: {
       )}
     </div>
   )
-}
-
-function getLastModification(t: Date | undefined) {
-  if (t) {
-    return "Modified at " + formatDate(t.getTime())
-  }
-  return ""
 }
