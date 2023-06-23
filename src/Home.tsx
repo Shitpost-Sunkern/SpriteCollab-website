@@ -4,7 +4,7 @@ import "./style/navbar.css"
 import PokemonCarousel from "./components/pokemon-carousel"
 import Search from "./components/search"
 import { useState } from "react"
-import Buttons from "./components/buttons"
+import Navbar from "./components/navbar"
 import { RankMethod, SpriteFilterMethod } from "./types/enum"
 import DisplayParameters from "./components/display-parameters"
 import PokemonRanking from "./components/pokemon-ranking"
@@ -24,7 +24,7 @@ export default function Home(props: { ids: number[]; meta: Meta }) {
   const [showSpriteBounty, setShowSpriteBounty] = useState<boolean>(false)
   return (
     <div className="App">
-      <Buttons />
+      <Navbar />
       <div
         className="main-box nes-container"
       >

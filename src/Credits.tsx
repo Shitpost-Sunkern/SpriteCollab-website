@@ -1,5 +1,5 @@
 import { TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material";
-import Buttons from "./components/buttons"
+import Navbar from "./components/navbar"
 import { useCreditsQuery } from "./generated/graphql"
 
 export default function Credits() {
@@ -15,7 +15,7 @@ export default function Credits() {
   ))
   return (
     <div className="App about">
-      <Buttons />
+      <Navbar />
       <div className="main-box nes-container" style={{ overflow: "scroll" }}>
         <h1 className="nes-text is-primary">Credits</h1>
         <TableContainer style={{ display: "flex", flexDirection: "column", height: "100%" }}>

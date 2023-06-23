@@ -1,4 +1,4 @@
-import Buttons from "./buttons"
+import Navbar from "./navbar"
 import PokemonInformations from "./pokemon-informations"
 import { ReactElement } from "react"
 import "react-tabs/style/react-tabs.css"
@@ -67,7 +67,7 @@ export default function PokemonPage(props: {
 
   return (
     <div className="App">
-      <Buttons />
+      <Navbar />
       <div
         className="nes-container"
         style={{

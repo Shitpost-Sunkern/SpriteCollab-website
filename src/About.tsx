@@ -1,9 +1,9 @@
-import Buttons from "./components/buttons"
+import Navbar from "./components/navbar"
 
 export default function About() {
   return (
     <div className="App about">
-      <Buttons />
+      <Navbar />
       <div
         className="nes-container"
         style={{
