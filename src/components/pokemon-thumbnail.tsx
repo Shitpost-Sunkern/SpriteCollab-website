@@ -21,10 +21,10 @@ export default function PokemonThumbnail(props: {
       alt=""
       src={props.info.manual.portraits.previewEmotion?.url}
     /> :
-    <h1 style={{ height: "80px", margin: "0px" }}>?</h1>;
+    <h1 className="my-img" style={{ fontSize: "4em" }}>?</h1>;
 
   const date: ReactElement | null = props.showLastModification ?
-    <p style={{ fontSize: "0.45em", margin: "0px" }}>
+    <p style={{ fontSize: "90%" }}>
       {formatDate(Math.max(
         new Date(props.info.manual?.portraits.modifiedDate).getTime(),
         new Date(props.info.manual?.sprites.modifiedDate).getTime()
@@ -32,21 +32,21 @@ export default function PokemonThumbnail(props: {
     </p> : null;
 
   const index: ReactElement | null = props.showIndex ?
-    <p style={{ fontSize: "0.55em", margin: "0px" }}>{props.infoKey}</p> : null;
+    <p>{props.infoKey}</p> : null;
 
   const portraitAuthor: ReactElement | null = props.showPortraitAuthor ?
-    <p style={{ fontSize: "0.55em", margin: "0px" }}>
+    <p>
       {props.info?.manual?.portraits?.creditPrimary?.name}
     </p> : null;
 
   const spriteAuthor: ReactElement | null = props.showSpriteAuthor ?
-    <p style={{ fontSize: "0.55em", margin: "0px" }}>
+    <p>
       {props.info.manual?.sprites.creditPrimary?.name}
     </p> : null;
 
   const portraitBounty: ReactElement | null = props.showPortraitBounty ?
     <div style={{ display: "flex" }}>
-      <p style={{ margin: "0px", fontSize: "0.55em", marginRight: "2px" }}>
+      <p style={{ marginRight: "2px" }}>
         {
           getMonsterMaxPortraitBounty(props.info)
         }
@@ -56,7 +56,7 @@ export default function PokemonThumbnail(props: {
 
   const spriteBounty: ReactElement | null = props.showSpriteBounty ?
     <div style={{ display: "flex" }}>
-      <p style={{ margin: "0px", fontSize: "0.55em", marginRight: "2px" }}>
+      <p style={{ marginRight: "2px" }}>
         {getMonsterMaxSpriteBounty(props.info)}
       </p>
       <FontAwesomeIcon icon={faCoins} size="xs" />
@@ -64,19 +64,9 @@ export default function PokemonThumbnail(props: {
 
   return (
     <Link to={props.infoKey.toString()} className="my-link">
-      <div
-        className="nes-container nes-pointer grow my-container"
-        style={{
-          display: "flex",
-          flexFlow: "column",
-          justifyContent: "space-between",
-          alignItems: "center",
-          minWidth: "100px",
-          margin: "10px"
-        }}
-      >
+      <div className="nes-container nes-pointer grow my-container thumbnail">
         {image}
-        <p style={{ fontSize: "0.55em", margin: "0px" }}>{props.info.name}</p>
+        <p>{props.info.name}</p>
         {index}
         {portraitAuthor}
         {spriteAuthor}

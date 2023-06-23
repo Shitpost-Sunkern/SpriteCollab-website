@@ -83,7 +83,7 @@ export default function PokemonCarousel(props: {
       }}
     >
       {monsters.filter(k =>
-        (props.filterBy == SpriteFilterMethod.ALL || isFiltered(k, props.filterBy)) &&
+        isFiltered(k, props.filterBy) &&
         (!props.currentText ||
         [k.name, k.manual?.portraits.creditPrimary?.name, k.id.toString()]
           .some(x => x?.toLowerCase().includes(props.currentText.toLowerCase())))

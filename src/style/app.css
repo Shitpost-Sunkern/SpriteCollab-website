@@ -55,6 +55,20 @@ body {
     color: black;
 }
 
+.thumbnail {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    font-size: 0.55em;
+    align-items: center;
+    min-width: 100px;
+    margin: 10px;
+}
+
+.thumbnail * {
+    margin: 0px;
+}
+
 .grow {
     transition: all .2s ease-in-out;
 }
@@ -145,6 +159,19 @@ h1, h5 {
 
     .filters {
         display: none;
+    }
+
+    .my-img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .thumbnail {
+        min-width: 75px;
+    }
+
+    .my-container p {
+        font-size: 0.75em;
     }
 
     .nes-container {
