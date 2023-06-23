@@ -16,10 +16,18 @@ const rankMethodToRankFunction: Record<RankMethod, (a: Monster, b: Monster) => n
       Math.max(dap.getTime(), das.getTime());
   },
   [RankMethod.NAME]: (a, b) => a.name?.localeCompare(b.name),
-  [RankMethod.PORTRAIT_AUTHOR]: (a, b) => a.manual?.portraits.creditPrimary?.name
-    ?.localeCompare(b.manual?.portraits.creditPrimary?.name ?? "") ?? 0,
-  [RankMethod.SPRITE_AUTHOR]: (a, b) => a.manual?.sprites.creditPrimary?.name
-    ?.localeCompare(b.manual?.sprites.creditPrimary?.name ?? "") ?? 0,
+  [RankMethod.PORTRAIT_AUTHOR]: (a, b) => {
+    const aName = a.manual?.portraits.creditPrimary?.name;
+    const bName = b.manual?.portraits.creditPrimary?.name;
+    if (!aName || !bName)return aName ? -1 : 1;
+    return aName?.localeCompare(bName);
+  },
+  [RankMethod.SPRITE_AUTHOR]: (a, b) => {
+    const aName = a.manual?.sprites.creditPrimary?.name;
+    const bName = b.manual?.sprites.creditPrimary?.name;
+    if (!aName || !bName)return aName ? -1 : 1;
+    return aName?.localeCompare(bName);
+  },
   [RankMethod.PORTRAIT_BOUNTY]: (a, b) =>
     getMonsterMaxPortraitBounty(b) - getMonsterMaxPortraitBounty(a),
   [RankMethod.SPRITE_BOUNTY]: (a, b) =>
