@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react"
-import { RankMethod, SpriteFilterMethod } from "../types/enum"
+import { SpriteFilterMethod } from "../types/enum"
 
 export default function PokemonFilter(props: {
   setFilterBy: Dispatch<SetStateAction<SpriteFilterMethod>>

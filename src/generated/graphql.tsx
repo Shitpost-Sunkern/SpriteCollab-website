@@ -342,6 +342,11 @@ export type CarrouselQueryVariables = Exact<{
 
 export type CarrouselQuery = { __typename?: 'Query', monster: Array<{ __typename?: 'Monster', id: number, name: string, rawId: string, forms: Array<{ __typename?: 'MonsterForm', portraits: { __typename?: 'MonsterFormPortraits', bounty: { __typename?: 'MonsterBounty', incomplete?: number | null, exists?: number | null, full?: number | null } }, sprites: { __typename?: 'MonsterFormSprites', phase: Phase, bounty: { __typename?: 'MonsterBounty', incomplete?: number | null, exists?: number | null, full?: number | null } } }>, manual?: { __typename?: 'MonsterForm', portraits: { __typename?: 'MonsterFormPortraits', modifiedDate?: any | null, creditPrimary?: { __typename?: 'Credit', name?: string | null } | null, previewEmotion?: { __typename?: 'Portrait', url: string } | null }, sprites: { __typename?: 'MonsterFormSprites', modifiedDate?: any | null, creditPrimary?: { __typename?: 'Credit', name?: string | null } | null } } | null }> };
 
+export type CreditsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CreditsQuery = { __typename?: 'Query', credit: Array<{ __typename?: 'Credit', name?: string | null, contact?: string | null, id: string, discordHandle?: string | null }> };
+
 export type KeysQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -438,6 +443,43 @@ export function useCarrouselLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type CarrouselQueryHookResult = ReturnType<typeof useCarrouselQuery>;
 export type CarrouselLazyQueryHookResult = ReturnType<typeof useCarrouselLazyQuery>;
 export type CarrouselQueryResult = Apollo.QueryResult<CarrouselQuery, CarrouselQueryVariables>;
+export const CreditsDocument = gql`
+    query Credits {
+  credit {
+    name
+    contact
+    id
+    discordHandle
+  }
+}
+    `;
+
+/**
+ * __useCreditsQuery__
+ *
+ * To run a query within a React component, call `useCreditsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCreditsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCreditsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCreditsQuery(baseOptions?: Apollo.QueryHookOptions<CreditsQuery, CreditsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CreditsQuery, CreditsQueryVariables>(CreditsDocument, options);
+      }
+export function useCreditsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CreditsQuery, CreditsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CreditsQuery, CreditsQueryVariables>(CreditsDocument, options);
+        }
+export type CreditsQueryHookResult = ReturnType<typeof useCreditsQuery>;
+export type CreditsLazyQueryHookResult = ReturnType<typeof useCreditsLazyQuery>;
+export type CreditsQueryResult = Apollo.QueryResult<CreditsQuery, CreditsQueryVariables>;
 export const KeysDocument = gql`
     query Keys {
   meta {

@@ -1,0 +1,8 @@
+query Credits {
+  credit {
+    name
+    contact
+    id
+    discordHandle
+  }
+}
