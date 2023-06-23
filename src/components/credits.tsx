@@ -43,9 +43,7 @@ export default function Credits(props: {
               gap: "0.7em"
             }}
           >
-            {props.secondary.map((s) => (
-              <Author credit={s} key={s.id} />
-            ))}
+            {props.secondary.map(s => <Author credit={s} key={s.id} />)}
           </div>
         </div>
       ) : null}
@@ -68,7 +66,7 @@ function Author(props: { credit: Credit | undefined | null }) {
         <a
           className="nes-text is-primary"
           style={{ fontSize: "0.7em", margin: "0px" }}
-          href={props.credit?.contact ? props.credit?.contact : ""}
+          href={props.credit?.contact ?? ""}
         >
           {props.credit?.name}
         </a>

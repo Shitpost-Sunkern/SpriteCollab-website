@@ -21,9 +21,7 @@ export default function DisplayParameters(props: {
           type="checkbox"
           className="nes-checkbox my-cursor"
           checked={props.showIndex}
-          onChange={(e) => {
-            props.setShowIndex(e.target.checked)
-          }}
+          onChange={e => props.setShowIndex(e.target.checked)}
         />
         <span style={{ fontSize: "0.7em" }}>Index</span>
       </label>
@@ -32,9 +30,7 @@ export default function DisplayParameters(props: {
           type="checkbox"
           className="nes-checkbox my-cursor"
           checked={props.showPortraitAuthor}
-          onChange={(e) => {
-            props.setPortraitAuthor(e.target.checked)
-          }}
+          onChange={e => props.setPortraitAuthor(e.target.checked)}
         />
         <span style={{ fontSize: "0.7em" }}>Portrait Author</span>
       </label>
@@ -43,9 +39,7 @@ export default function DisplayParameters(props: {
           type="checkbox"
           className="nes-checkbox my-cursor"
           checked={props.showSpriteAuthor}
-          onChange={(e) => {
-            props.setSpriteAuthor(e.target.checked)
-          }}
+          onChange={e => props.setSpriteAuthor(e.target.checked)}
         />
         <span style={{ fontSize: "0.7em" }}>Sprite Author</span>
       </label>
@@ -54,9 +48,7 @@ export default function DisplayParameters(props: {
           type="checkbox"
           className="nes-checkbox my-cursor"
           checked={props.showLastModification}
-          onChange={(e) => {
-            props.setShowLastModification(e.target.checked)
-          }}
+          onChange={e => props.setShowLastModification(e.target.checked)}
         />
         <span style={{ fontSize: "0.7em" }}>Last Change</span>
       </label>
@@ -65,9 +57,7 @@ export default function DisplayParameters(props: {
           type="checkbox"
           className="nes-checkbox my-cursor"
           checked={props.showPortraitBounty}
-          onChange={(e) => {
-            props.setShowPortraitBounty(e.target.checked)
-          }}
+          onChange={e => props.setShowPortraitBounty(e.target.checked)}
         />
         <span style={{ fontSize: "0.7em" }}>Portrait Bounty</span>
       </label>
@@ -76,9 +66,7 @@ export default function DisplayParameters(props: {
           type="checkbox"
           className="nes-checkbox my-cursor"
           checked={props.showSpriteBounty}
-          onChange={(e) => {
-            props.setShowSpriteBounty(e.target.checked)
-          }}
+          onChange={e => props.setShowSpriteBounty(e.target.checked)}
         />
         <span style={{ fontSize: "0.7em" }}>Sprite Bounty</span>
       </label>

@@ -7,8 +7,7 @@ export default function Emotions(props: { emotions: Portrait[] }) {
     <div style={{ display: "flex", flexWrap: "wrap" }}>
       {emotionsCopy
         .sort((a, b) => a.emotion.localeCompare(b.emotion))
-        .map((k) => {
-          return (
+        .map(k => (
             <div
               key={k.emotion}
               className="my-container nes-container"
@@ -35,7 +34,7 @@ export default function Emotions(props: { emotions: Portrait[] }) {
               </div>
             </div>
           )
-        })}
+        )}
     </div>
   )
 }

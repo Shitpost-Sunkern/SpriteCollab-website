@@ -19,14 +19,12 @@ const rankMethodToRankFunction: Record<RankMethod, (a: Monster, b: Monster) => n
   [RankMethod.PORTRAIT_AUTHOR]: (a, b) => {
     const aName = a.manual?.portraits.creditPrimary?.name;
     const bName = b.manual?.portraits.creditPrimary?.name;
-    if (!aName || !bName)return aName ? -1 : 1;
-    return aName?.localeCompare(bName);
+    return aName && bName ? aName?.localeCompare(bName) : aName ? -1 : 1;
   },
   [RankMethod.SPRITE_AUTHOR]: (a, b) => {
     const aName = a.manual?.sprites.creditPrimary?.name;
     const bName = b.manual?.sprites.creditPrimary?.name;
-    if (!aName || !bName)return aName ? -1 : 1;
-    return aName?.localeCompare(bName);
+    return aName && bName ? aName?.localeCompare(bName) : aName ? -1 : 1;
   },
   [RankMethod.PORTRAIT_BOUNTY]: (a, b) =>
     getMonsterMaxPortraitBounty(b) - getMonsterMaxPortraitBounty(a),
@@ -57,9 +55,7 @@ export default function PokemonCarousel(props: {
 
   useEffect(() => {
     if (data && data.monster.length > 0) {
-      const ms = [...monsters];
-      (data?.monster as Monster[]).forEach(monster => ms.push(monster))
-      setMonsters(ms)
+      setMonsters([...monsters, ...(data?.monster as Monster[] ?? [])])
     }
 
     if (data?.monster && index <= props.ids.length) {
@@ -87,11 +83,11 @@ export default function PokemonCarousel(props: {
       }}
     >
       {monsters.filter(k =>
-        k?.name?.toLowerCase().includes(lowerCaseText) ||
-        k?.manual?.portraits?.creditPrimary?.name
+        k.name?.toLowerCase().includes(lowerCaseText) ||
+        k.manual?.portraits.creditPrimary?.name
           ?.toLowerCase()
           .includes(lowerCaseText) ||
-        k?.id.toString().includes(lowerCaseText)
+        k.id.toString().includes(lowerCaseText)
       )
         .sort((a, b) => rankMethodToRankFunction[props.rankBy]?.(a as Monster, b as Monster) ?? 0)
         .map((k) => (

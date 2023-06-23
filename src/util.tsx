@@ -8,7 +8,6 @@ export function formatDate(n: number): string {
     return `${pad(date.getDate())}/${pad(date.getMonth())}/${date.getFullYear()}`;
 }
 
-// 
 export const getMonsterMaxPortraitBounty = (monster: Monster) => monster.forms.reduce((a, b) => Math.max(
     a,
     b.portraits.bounty.exists || 0,
