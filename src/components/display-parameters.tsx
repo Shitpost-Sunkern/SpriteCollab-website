@@ -23,7 +23,8 @@ export default function DisplayParameters(props: {
           checked={props.showIndex}
           onChange={e => props.setShowIndex(e.target.checked)}
         />
-        <span style={{ fontSize: "0.7em" }}>Index</span>
+        <span className="display-parameter">Index</span>
+        
       </label>
       <label className="my-label">
         <input
@@ -32,7 +33,7 @@ export default function DisplayParameters(props: {
           checked={props.showPortraitAuthor}
           onChange={e => props.setPortraitAuthor(e.target.checked)}
         />
-        <span style={{ fontSize: "0.7em" }}>Portrait Author</span>
+        <span className="display-parameter">Portrait Author</span>
       </label>
       <label className="my-label">
         <input
@@ -41,7 +42,7 @@ export default function DisplayParameters(props: {
           checked={props.showSpriteAuthor}
           onChange={e => props.setSpriteAuthor(e.target.checked)}
         />
-        <span style={{ fontSize: "0.7em" }}>Sprite Author</span>
+        <span className="display-parameter">Sprite Author</span>
       </label>
       <label className="my-label">
         <input
@@ -50,7 +51,7 @@ export default function DisplayParameters(props: {
           checked={props.showLastModification}
           onChange={e => props.setShowLastModification(e.target.checked)}
         />
-        <span style={{ fontSize: "0.7em" }}>Last Change</span>
+        <span className="display-parameter">Last Change</span>
       </label>
       <label className="my-label">
         <input
@@ -59,7 +60,7 @@ export default function DisplayParameters(props: {
           checked={props.showPortraitBounty}
           onChange={e => props.setShowPortraitBounty(e.target.checked)}
         />
-        <span style={{ fontSize: "0.7em" }}>Portrait Bounty</span>
+        <span className="display-parameter">Portrait Bounty</span>
       </label>
       <label className="my-label">
         <input
@@ -68,7 +69,7 @@ export default function DisplayParameters(props: {
           checked={props.showSpriteBounty}
           onChange={e => props.setShowSpriteBounty(e.target.checked)}
         />
-        <span style={{ fontSize: "0.7em" }}>Sprite Bounty</span>
+        <span className="display-parameter">Sprite Bounty</span>
       </label>
     </div>
   )

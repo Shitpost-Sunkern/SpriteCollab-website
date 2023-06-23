@@ -55,6 +55,13 @@ export enum RankMethod {
   SPRITE_BOUNTY = "Sprite Bounty"
 }
 
+export enum SpriteFilterMethod {
+  ALL = "All",
+  FULLY_FEATURED = "Fully Featured",
+  COMPLETE = "Complete",
+  INCOMPLETE = "Incomplete"
+}
+
 export enum Dungeon {
   FOURTH_STATION_PATH = "FOURTH_STATION_PATH",
   SEVEN_STATION_PATH = "SEVEN_STATION_PATH",

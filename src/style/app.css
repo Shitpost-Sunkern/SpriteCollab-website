@@ -5,12 +5,32 @@ body {
 }
 
 .App {
-  text-align: center;
-  background-image: url('../../public/background.png');
-  background-repeat: repeat;
-  height: 100vh;
-  width: 100vw;
-  padding: 20px;
+    text-align: center;
+    background-image: url('../../public/background.png');
+    background-repeat: repeat;
+    height: 100vh;
+    width: 100vw;
+    padding: 20px;
+}
+
+.main-box.nes-container {
+    height: 90vh;
+    background-color: rgba(255, 255, 255, 0.85);
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 0rem;
+}
+
+.options {
+    display: grid;
+    grid-template-columns: 30% 23% 24% 24%;
+    width: 100%;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .my-container.nes-container {
@@ -35,30 +55,28 @@ body {
     color: black;
 }
 
-.grow { 
-    transition: all .2s ease-in-out; 
+.grow {
+    transition: all .2s ease-in-out;
 }
 
-.grow:hover { 
-    transform: scale(1.1); 
+.grow:hover {
+    transform: scale(1.1);
 }
 
 .my-cursor {
-    cursor: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAzElEQVRYR+2X0Q6AIAhF5f8/2jYXZkwEjNSVvVUjDpcrGgT7FUkI2D9xRfQETwNIiWO85wfINfQUEyxBG2ArsLwC0jioGt5zFcwF4OYDPi/mBYKm4t0U8ATgRm3ThFoAqkhNgWkA0jJLvaOVSs7j3qMnSgXWBMiWPXe94QqMBMBc1VZIvaTu5u5pQewq0EqNZvIEMCmxAawK0DNkay9QmfFNAJUXfgGgUkLaE7j/h8fnASkxHTz0DGIBMCnBeeM7AArpUd3mz2x3C7wADglA8BcWMZhZAAAAAElFTkSuQmCC) 14 0,pointer!important;
+    cursor: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAzElEQVRYR+2X0Q6AIAhF5f8/2jYXZkwEjNSVvVUjDpcrGgT7FUkI2D9xRfQETwNIiWO85wfINfQUEyxBG2ArsLwC0jioGt5zFcwF4OYDPi/mBYKm4t0U8ATgRm3ThFoAqkhNgWkA0jJLvaOVSs7j3qMnSgXWBMiWPXe94QqMBMBc1VZIvaTu5u5pQewq0EqNZvIEMCmxAawK0DNkay9QmfFNAJUXfgGgUkLaE7j/h8fnASkxHTz0DGIBMCnBeeM7AArpUd3mz2x3C7wADglA8BcWMZhZAAAAAElFTkSuQmCC) 14 0, pointer !important;
 }
 
-.my-label {
-    margin:0px
+
+.customeTheme {
+    opacity: 1;
+    border-color: #000;
+    border-style: solid;
+    border-width: 4px
 }
 
-.customeTheme{
-    opacity:1;
-    border-color:#000;
-    border-style:solid;
-    border-width:4px
-}
-
-.about .nes-container p, .about .nes-container li {
+.about .nes-container p,
+.about .nes-container li {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
@@ -94,10 +112,11 @@ h1, h5 {
 
 .filters {
     display: grid;
-    grid-template-columns: 210px 210px;
-    justify-items: left; 
+    grid-template-columns: 50% 50%;
+    justify-items: left;
     flex-flow: column;
     align-items: start;
+    font-size: 0.75em;
 }
 
 .sort label {
@@ -115,8 +134,17 @@ h1, h5 {
     h1 {
         font-size: 16pt;
     }
+
     h5 {
         font-size: 8pt;
+    }
+
+    .options {
+        grid-template-columns: 100%;
+    }
+
+    .filters {
+        display: none;
     }
 
     .nes-container {
@@ -128,17 +156,12 @@ h1, h5 {
     }
 
     .search label {
-        /* Ugh. We really should have the NES theme imported first so our CSS takes precedence, but that's a problem for another day */
-        margin-right: 0; 
-    }
-
-    .filters {
-        display: none;
+        margin-right: 0;
     }
 
     .footer {
         display: block;
-        margin-bottom: .5em; /* Same here. */
+        margin-bottom: .5em;
     }
 
     .footer p {
@@ -146,4 +169,3 @@ h1, h5 {
         font-size: 6px;
     }
 }
-

@@ -1,8 +1,8 @@
 /* eslint-disable no-case-declarations */
 import { useEffect, useState } from "react"
 import { Monster, useCarrouselQuery } from "../generated/graphql"
-import { RankMethod, REQUEST_ITEMS_SIZE } from "../types/enum"
-import { getMonsterMaxPortraitBounty, getMonsterMaxSpriteBounty } from "../util"
+import { RankMethod, REQUEST_ITEMS_SIZE, SpriteFilterMethod } from "../types/enum"
+import { getMonsterMaxPortraitBounty, getMonsterMaxSpriteBounty, isFiltered } from "../util"
 import PokemonThumbnail from "./pokemon-thumbnail"
 
 const rankMethodToRankFunction: Record<RankMethod, (a: Monster, b: Monster) => number> = {
@@ -35,6 +35,7 @@ const rankMethodToRankFunction: Record<RankMethod, (a: Monster, b: Monster) => n
 export default function PokemonCarousel(props: {
   currentText: string
   rankBy: RankMethod
+  filterBy: SpriteFilterMethod
   showIndex: boolean
   showPortraitAuthor: boolean
   showSpriteAuthor: boolean
@@ -71,7 +72,6 @@ export default function PokemonCarousel(props: {
   if (loading && !monsters.length) return <p>loading...</p>;
   if (error) return <p>Error</p>;
 
-  const lowerCaseText = props.currentText.toLowerCase()
   return (
     <div
       style={{
@@ -83,11 +83,10 @@ export default function PokemonCarousel(props: {
       }}
     >
       {monsters.filter(k =>
-        k.name?.toLowerCase().includes(lowerCaseText) ||
-        k.manual?.portraits.creditPrimary?.name
-          ?.toLowerCase()
-          .includes(lowerCaseText) ||
-        k.id.toString().includes(lowerCaseText)
+        (props.filterBy == SpriteFilterMethod.ALL || isFiltered(k, props.filterBy)) &&
+        (!props.currentText ||
+        [k.name, k.manual?.portraits.creditPrimary?.name, k.id.toString()]
+          .some(x => x?.toLowerCase().includes(props.currentText.toLowerCase())))
       )
         .sort((a, b) => rankMethodToRankFunction[props.rankBy]?.(a as Monster, b as Monster) ?? 0)
         .map((k) => (

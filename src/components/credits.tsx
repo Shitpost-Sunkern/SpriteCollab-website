@@ -26,7 +26,7 @@ export default function Credits(props: {
         </div>
       ) : null}
 
-      {props.secondary.length !== 0 ? (
+      {props.secondary.length ? (
         <div
           style={{
             display: "flex",

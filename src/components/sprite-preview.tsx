@@ -26,7 +26,7 @@ export default function SpritePreview(props: {
         )
       }
 
-      if (node !== null && !initialized) {
+      if (node && !initialized) {
         setInitialized(true)
         initialize()
       }

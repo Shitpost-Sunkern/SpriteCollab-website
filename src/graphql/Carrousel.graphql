@@ -16,6 +16,7 @@ query Carrousel($ids: [Int!]!) {
                 }
             }
             sprites{
+                phase
                 bounty{
                     ...myBounty
                 }

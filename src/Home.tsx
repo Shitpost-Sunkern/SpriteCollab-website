@@ -5,13 +5,15 @@ import PokemonCarousel from "./components/pokemon-carousel"
 import Search from "./components/search"
 import { useState } from "react"
 import Buttons from "./components/buttons"
-import { RankMethod } from "./types/enum"
+import { RankMethod, SpriteFilterMethod } from "./types/enum"
 import DisplayParameters from "./components/display-parameters"
 import PokemonRanking from "./components/pokemon-ranking"
 import { Meta } from "./generated/graphql"
+import PokemonFilter from './components/pokemon-filter'
 
 export default function Home(props: { ids: number[]; meta: Meta }) {
   const [currentText, setCurrentText] = useState("")
+  const [filterBy, setFilterBy] = useState<SpriteFilterMethod>(SpriteFilterMethod.ALL)
   const [rankBy, setRankBy] = useState<RankMethod>(RankMethod.POKEDEX_NUMBER)
   const [showPortraitAuthor, setPortraitAuthor] = useState<boolean>(false)
   const [showSpriteAuthor, setSpriteAuthor] = useState<boolean>(false)
@@ -24,16 +26,7 @@ export default function Home(props: { ids: number[]; meta: Meta }) {
     <div className="App">
       <Buttons />
       <div
-        className="nes-container"
-        style={{
-          height: "90vh",
-          backgroundColor: "rgba(255,255,255,0.85)",
-          display: "flex",
-          flexFlow: "column",
-          alignItems: "center",
-          gap: "10px",
-          paddingBottom: "0rem"
-        }}
+        className="main-box nes-container"
       >
         <div>
           <h1>PMDCollab Sprite&nbsp;Project</h1>
@@ -43,16 +36,7 @@ export default function Home(props: { ids: number[]; meta: Meta }) {
           </h5>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            width: "100%",
-            alignContent: "center",
-            alignItems: "center",
-            justifyContent: "space-between",
-            flexWrap: "wrap"
-          }}
-        >
+        <div className="options">
           <DisplayParameters
             setSpriteAuthor={setSpriteAuthor}
             setPortraitAuthor={setPortraitAuthor}
@@ -70,6 +54,10 @@ export default function Home(props: { ids: number[]; meta: Meta }) {
 
           <Search currentText={currentText} setCurrentText={setCurrentText} />
 
+          <PokemonFilter
+            filterBy={filterBy}
+            setFilterBy={setFilterBy}
+          />
           <PokemonRanking
             setSpriteAuthor={setSpriteAuthor}
             setPortraitAuthor={setPortraitAuthor}
@@ -84,6 +72,7 @@ export default function Home(props: { ids: number[]; meta: Meta }) {
         <PokemonCarousel
           currentText={currentText}
           rankBy={rankBy}
+          filterBy={filterBy}
           showPortraitAuthor={showPortraitAuthor}
           showSpriteAuthor={showSpriteAuthor}
           showIndex={showIndex}
