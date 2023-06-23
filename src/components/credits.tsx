@@ -12,7 +12,7 @@ export default function Credits(props: {
         justifyContent: "space-around"
       }}
     >
-      {props.primary?.name ? (
+      {props.primary ? (
         <div
           style={{
             display: "flex",

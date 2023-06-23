@@ -83,11 +83,11 @@ export default function Home(props: { ids: number[]; meta: Meta }) {
         />
         <div className="footer">
           <p>
-            Last update:{" "}
+            Last update: 
             {new Date(props.meta.assetsUpdateDate).toLocaleString()}
           </p>
           <p>
-            Last check for updates:{" "}
+            Last check for updates: 
             {new Date(props.meta.updateCheckedDate).toLocaleString()}
           </p>
           <a

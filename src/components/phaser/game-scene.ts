@@ -13,71 +13,62 @@ export default class GameScene extends Phaser.Scene {
   }
 
   init() {
-    const g = this.game as MyGame
-    this.metadata = g.animationData.Anims.Anim.find(
-      (m) => m.Name === g.sprite.action
-    )
-    this.animUrl = g.sprite.animUrl
-    this.shadowsUrl = g.sprite.shadowsUrl
-    this.action = g.sprite.action
-    this.dungeon = g.dungeon
+    const { animationData, sprite, dungeon } = this.game as MyGame;
+    this.metadata = animationData.Anims.Anim.find(m => m.Name === sprite.action);
+    this.animUrl = sprite.animUrl;
+    this.shadowsUrl = sprite.shadowsUrl;
+    this.action = sprite.action;
+    this.dungeon = dungeon;
   }
 
   preload() {
-    const m = this.metadata as IAnim
+    const { FrameWidth, FrameHeight } = this.metadata as IAnim;
     this.load.image(
       "small-ba",
       `${process.env.PUBLIC_URL}/maps/${this.dungeon}.png`
-    )
+    );
     this.load.spritesheet(
       `${this.action}-${AnimationType.ANIM}`,
       this.animUrl,
-      { frameWidth: m.FrameWidth, frameHeight: m.FrameHeight }
-    )
+      { frameWidth: FrameWidth, frameHeight: FrameHeight }
+    );
     this.load.spritesheet(
       `${this.action}-${AnimationType.SHADOW}`,
       this.shadowsUrl,
-      { frameWidth: m.FrameWidth, frameHeight: m.FrameHeight }
-    )
+      { frameWidth: FrameWidth, frameHeight: FrameHeight }
+    );
   }
 
   create() {
-    const animations = [AnimationType.ANIM, AnimationType.SHADOW]
-    animations.forEach((animationType) => {
-      const frameArray = this.anims.generateFrameNumbers(
+    for (const animationType of [AnimationType.ANIM, AnimationType.SHADOW]) {
+      const frames = this.anims.generateFrameNumbers(
         `${this.action}-${animationType}`,
         { start: 0, end: -1 }
-      )
-      const m = this.metadata as IAnim
-      const durationArray = Array.isArray(m.Durations.Duration)
-        ? m.Durations.Duration
-        : [m.Durations.Duration]
-      for (let i = 0; i < frameArray.length; i++) {
-        if (durationArray[i]) {
-          frameArray[i]["duration"] = durationArray[i] * 20
-        } else {
-          frameArray[i]["duration"] =
-            durationArray[i % durationArray.length] * 20
-        }
+      );
+      const singleAnim = this.metadata as IAnim;
+      const durations = Array.isArray(singleAnim.Durations.Duration) ?
+        singleAnim.Durations.Duration :
+        [singleAnim.Durations.Duration];
+      for (let i = 0; i < frames.length; i++) {
+        frames[i]["duration"] = durations[i % durations.length] * 20;
       }
       this.anims.create({
-        key: `${animationType}`,
-        frames: frameArray,
+        key: animationType.toString(),
+        frames,
         repeat: -1
-      })
-    })
+      });
+    }
 
-    const scaleFactor =
-      this.metadata?.FrameHeight && this.metadata.FrameHeight < 100 ? 2 : 1
-    this.add.image(100, 100, "small-ba").setScale(scaleFactor, scaleFactor)
+    const scaleFactor = this.metadata?.FrameHeight ?? 0 < 100 ? 2 : 1;
+    this.add.image(100, 100, "small-ba").setScale(scaleFactor, scaleFactor);
     this.add
       .sprite(100, 110, `${this.action}-${AnimationType.SHADOW}`)
       .setScale(scaleFactor, scaleFactor)
       .setTintFill(0xffffff)
-      .play(AnimationType.SHADOW)
+      .play(AnimationType.SHADOW);
     this.add
       .sprite(100, 105, `${this.action}-${AnimationType.ANIM}`)
       .setScale(scaleFactor, scaleFactor)
-      .play(AnimationType.ANIM)
+      .play(AnimationType.ANIM);
   }
 }

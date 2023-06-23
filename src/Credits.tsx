@@ -7,10 +7,9 @@ export default function Credits() {
   if (!credits) return null;
   const tableRow = credits.map(x => (
     <TableRow>
-      <TableCell ><Typography>{x.id}</Typography></TableCell>
-      <TableCell ><Typography>{x.name}</Typography></TableCell>
-      <TableCell ><Typography>{x.contact}</Typography></TableCell>
-      <TableCell ><Typography>{x.discordHandle}</Typography></TableCell>
+      <TableCell><Typography>{x.id}</Typography></TableCell>
+      <TableCell><Typography>{x.name}</Typography></TableCell>
+      <TableCell><Typography>{x.contact}</Typography></TableCell>
     </TableRow>
   ))
   return (
@@ -23,7 +22,6 @@ export default function Credits() {
             <TableCell><Typography>ID</Typography></TableCell>
             <TableCell><Typography>Name</Typography></TableCell>
             <TableCell><Typography>Contact</Typography></TableCell>
-            <TableCell><Typography>Discord</Typography></TableCell>
             {tableRow}
           </TableBody>
         </TableContainer>
