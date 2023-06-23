@@ -5,7 +5,7 @@ import { useCreditsQuery } from "./generated/graphql"
 export default function Credits() {
   const credits = useCreditsQuery()?.data?.credit;
   if (!credits) return null;
-  const lalalalalalalalalalalalalala = credits.map(x => (
+  const tableRow = credits.map(x => (
     <TableRow>
       <TableCell ><Typography>{x.id}</Typography></TableCell>
       <TableCell ><Typography>{x.name}</Typography></TableCell>
@@ -24,7 +24,7 @@ export default function Credits() {
             <TableCell><Typography>Name</Typography></TableCell>
             <TableCell><Typography>Contact</Typography></TableCell>
             <TableCell><Typography>Discord</Typography></TableCell>
-            {lalalalalalalalalalalalalala}
+            {tableRow}
           </TableBody>
         </TableContainer>
       </div>
