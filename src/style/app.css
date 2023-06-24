@@ -193,6 +193,15 @@ h5 {
     overflow-x: hidden;
 }
 
+.display-parameter {
+    font-family: "VT323";
+    font-size: 14pt;
+}
+
+.my-label .nes-checkbox + span::before, .my-label .nes-checkbox:checked + span::before {
+    top: 0em;
+}
+
 /* Mobile styles */
 @media (max-width: 480px) {
     h1 {
