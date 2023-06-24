@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react"
 import { Monster, useCarrouselQuery } from "../generated/graphql"
 import { RankMethod, REQUEST_ITEMS_SIZE, SpriteFilterMethod } from "../types/enum"
-import { getMonsterMaxPortraitBounty, getMonsterMaxSpriteBounty, isFiltered } from "../util"
+import { formatPokemonName, getMonsterMaxPortraitBounty, getMonsterMaxSpriteBounty, isFiltered } from "../util"
 import PokemonThumbnail from "./pokemon-thumbnail"
 
 const rankMethodToRankFunction: Record<RankMethod, (a: Monster, b: Monster) => number> = {
@@ -73,20 +73,15 @@ export default function PokemonCarousel(props: {
   if (error) return <p>Error</p>;
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "space-between",
-        overflowY: "scroll",
-        overflowX: "hidden"
-      }}
-    >
+    <div className="pokemon-grid">
       {monsters.filter(k =>
         isFiltered(k, props.filterBy) &&
-        (!props.currentText ||
-        [k.name, k.manual?.portraits.creditPrimary?.name, k.id.toString()]
-          .some(x => x?.toLowerCase().includes(props.currentText.toLowerCase())))
+        (
+          !props.currentText ||
+          [k.name, k.manual?.portraits.creditPrimary?.name, k.id.toString()]
+          .some(x => x?.toLowerCase().includes(props.currentText.toLowerCase())) ||
+          formatPokemonName(k.name)?.toLowerCase().includes(props.currentText.toLowerCase())
+          )
       )
         .sort((a, b) => rankMethodToRankFunction[props.rankBy]?.(a as Monster, b as Monster) ?? 0)
         .map((k) => (

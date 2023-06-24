@@ -183,6 +183,14 @@ h5 {
     gap: 1.25em;
 }
 
+.pokemon-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
 /* Mobile styles */
 @media (max-width: 480px) {
     h1 {
