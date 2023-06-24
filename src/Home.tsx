@@ -31,7 +31,7 @@ export default function Home(props: { ids: number[]; meta: Meta }) {
         <div>
           <h1>PMDCollab Sprite&nbsp;Project</h1>
           <h5>
-            Free to use with credit for ROMhacks, fangames, etc. Don't use for
+            Free to use <span className="give-us-credit-dammit">with credit</span> for ROMhacks, fangames, etc. Don't use for
             commercial projects.
           </h5>
         </div>
