@@ -25,7 +25,7 @@ export default function PokemonThumbnail(props: {
     <h1 className="my-img" style={{ fontSize: "4em" }}>?</h1>;
 
   const date: ReactElement | null = props.showLastModification ?
-    <p style={{ fontSize: "90%" }}>
+    <p>
       {formatDate(Math.max(
         new Date(props.info.manual?.portraits.modifiedDate).getTime(),
         new Date(props.info.manual?.sprites.modifiedDate).getTime()
@@ -48,19 +48,16 @@ export default function PokemonThumbnail(props: {
   const portraitBounty: ReactElement | null = props.showPortraitBounty ?
     <div style={{ display: "flex" }}>
       <p style={{ marginRight: "2px" }}>
-        {
-          getMonsterMaxPortraitBounty(props.info)
-        }
+        {getMonsterMaxPortraitBounty(props.info)} GP
       </p>
-      <FontAwesomeIcon icon={faCoins} size="xs" />
     </div> : null;
 
   const spriteBounty: ReactElement | null = props.showSpriteBounty ?
     <div style={{ display: "flex" }}>
       <p style={{ marginRight: "2px" }}>
-        {getMonsterMaxSpriteBounty(props.info)}
+        {getMonsterMaxSpriteBounty(props.info)} GP
       </p>
-      <FontAwesomeIcon icon={faCoins} size="xs" />
+      
     </div> : null;
 
   return (
