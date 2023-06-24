@@ -4,6 +4,7 @@ import { ReactElement } from "react"
 import { Link } from "react-router-dom"
 import { Monster } from "../generated/graphql"
 import { getMonsterMaxPortraitBounty, getMonsterMaxSpriteBounty, formatDate } from "../util"
+import { formatPokemonName } from "../util"
 
 export default function PokemonThumbnail(props: {
   info: Monster
@@ -66,7 +67,7 @@ export default function PokemonThumbnail(props: {
     <Link to={props.infoKey.toString()} className="my-link">
       <div className="nes-container nes-pointer grow my-container thumbnail">
         {image}
-        <p>{props.info.name}</p>
+        <p>{formatPokemonName(props.info.name)}</p>
         {index}
         {portraitAuthor}
         {spriteAuthor}

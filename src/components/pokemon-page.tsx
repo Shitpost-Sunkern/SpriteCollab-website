@@ -5,6 +5,7 @@ import "react-tabs/style/react-tabs.css"
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs"
 import { Link } from "react-router-dom"
 import { MonsterForm, usePokemonQuery } from "../generated/graphql"
+import { formatPokemonName } from "../util"
 
 export default function PokemonPage(props: {
   infoKey: number
@@ -51,7 +52,7 @@ export default function PokemonPage(props: {
               : "nes-pointer"
           }
         >
-          {form.fullName}
+          {formatPokemonName(form.fullName)}
         </p>
       </Tab>
     )
@@ -76,7 +77,7 @@ export default function PokemonPage(props: {
           {error ? <h1 style={{ fontSize: "1.3em" }}>error</h1> : null}
           {prevLink}
           <h1 style={{ fontSize: "1.3em" }}>
-            {props.rawId} {data?.monster[0].name}
+            {props.rawId} {formatPokemonName(data?.monster[0].name)}
           </h1>
           {nextLink}
         </div>

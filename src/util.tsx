@@ -3,6 +3,30 @@ import { SpriteFilterMethod } from './types/enum';
 
 const pad = (number: number): string => number < 10 ? "0" + number : number.toString();
 
+export function formatPokemonName(name: string | undefined): string | undefined {
+
+    if (name == undefined)
+        return undefined
+
+    // This could be more compact by matching with regex but I can't be bothered
+
+    name = name.replace("fetch_d", "fetch'd") // Farfetch'd, Sirfetch'd
+    name = name.replace("Flabebe", "Flabébé")
+    name = name.replace("Mr_", "Mr. ") // Mr. Mime, Mr. Rime
+    name = name.replace("Jr_", "Jr.") // Mime Jr.
+    name = name.replace("mo_o", "mo-o") // Jangmo-o, Hakamo-o, Kommo-o
+    name = name.replace("Ho_Oh", "Ho-Oh")
+    name = name.replace("Type_Null", "Type: Null")
+    name = name.replace("Wo_Chien", "Wo-Chien")
+    name = name.replace("Chien_Pao", "Chien-Pao")
+    name = name.replace("Ting_Lu", "Ting-Lu")
+    name = name.replace("Chi_Yu", "Chi-Yu")
+    name = name.replace("Porygon_Z", "Porygon-Z")
+    name = name.replace("Missingno_", "Missingno.")
+    
+    return name.replace("_", " ") // Whatever other underscores should be spaces
+}
+
 export function formatDate(n: number): string {
     if (n == undefined) return "";
     const date = new Date(n);
