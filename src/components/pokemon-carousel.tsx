@@ -73,15 +73,7 @@ export default function PokemonCarousel(props: {
   if (error) return <p>Error</p>;
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "space-between",
-        overflowY: "scroll",
-        overflowX: "hidden"
-      }}
-    >
+    <div className="pokemon-grid">
       {monsters.filter(k =>
         isFiltered(k, props.filterBy) &&
         (
