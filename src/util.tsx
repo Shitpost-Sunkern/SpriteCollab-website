@@ -23,6 +23,8 @@ export function formatPokemonName(name: string | undefined): string | undefined 
     name = name.replace("Chi_Yu", "Chi-Yu")
     name = name.replace("Porygon_Z", "Porygon-Z")
     name = name.replace("Missingno_", "Missingno.")
+    name = name.replace("Nidoran_F", "Nidoran♀")
+    name = name.replace("Nidoran_M", "Nidoran♂")
     
     return name.replace("_", " ") // Whatever other underscores should be spaces
 }
