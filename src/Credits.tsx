@@ -7,7 +7,6 @@ export default function Credits() {
   if (!credits) return null;
   const tableRow = credits.map(x => (
     <TableRow>
-      <TableCell><Typography>{x.id}</Typography></TableCell>
       <TableCell><Typography>{x.name}</Typography></TableCell>
       <TableCell><Typography>{x.contact}</Typography></TableCell>
     </TableRow>
@@ -19,7 +18,6 @@ export default function Credits() {
         <h1 className="nes-text is-primary">Credits</h1>
         <TableContainer style={{ display: "flex", flexDirection: "column", height: "100%" }}>
           <TableBody style={{ flex: "1 1 auto", overflowY: "auto" }}>
-            <TableCell><Typography>ID</Typography></TableCell>
             <TableCell><Typography>Name</Typography></TableCell>
             <TableCell><Typography>Contact</Typography></TableCell>
             {tableRow}
