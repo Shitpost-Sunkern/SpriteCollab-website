@@ -62,7 +62,7 @@ export default class GameScene extends Phaser.Scene {
     const scaleFactor = this.metadata?.FrameHeight ?? 0 < 100 ? 2 : 1;
     this.add.image(100, 100, "small-ba").setScale(scaleFactor, scaleFactor);
     this.add
-      .sprite(100, 110, `${this.action}-${AnimationType.SHADOW}`)
+      .sprite(100, 105, `${this.action}-${AnimationType.SHADOW}`)
       .setScale(scaleFactor, scaleFactor)
       .setTintFill(0xffffff)
       .play(AnimationType.SHADOW);
