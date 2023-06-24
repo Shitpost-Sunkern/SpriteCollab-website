@@ -69,14 +69,7 @@ export default function PokemonPage(props: {
     <div className="App">
       <Navbar />
       <div
-        className="nes-container"
-        style={{
-          height: "90vh",
-          backgroundColor: "rgba(255,255,255,0.9)",
-          display: "flex",
-          flexFlow: "column",
-          overflowY: "scroll"
-        }}
+        className="nes-container pokemon-page"
       >
         <div style={{ display: "flex", justifyContent: "center" }}>
           {loading ? <h1 style={{ fontSize: "1.3em" }}>loading...</h1> : null}
