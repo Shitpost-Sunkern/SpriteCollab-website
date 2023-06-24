@@ -26,7 +26,6 @@ export default function PokemonRanking(props: {
     >
       <label style={{ fontSize: "0.7em", marginBottom: "0rem" }}>Sort by</label>
       <select
-        style={{ borderWidth: "2px", height: "40px", fontSize: "0.7em" }}
         value={props.rankBy}
         id="default_select"
         onChange={option => {

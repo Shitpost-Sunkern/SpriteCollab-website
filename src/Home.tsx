@@ -83,19 +83,19 @@ export default function Home(props: { ids: number[]; meta: Meta }) {
         />
         <div className="footer">
           <p>
-            Last update: 
+            Last update: {" "}
             {new Date(props.meta.assetsUpdateDate).toLocaleString()}
           </p>
           <p>
-            Last check for updates: 
+            Last check for updates: {" "}
             {new Date(props.meta.updateCheckedDate).toLocaleString()}
           </p>
-          <a
+          <p><a
             target="_blank"
             href={`https://github.com/PMDCollab/SpriteCollab/commit/${props.meta.assetsCommit}`}
           >
             Last Commit
-          </a>
+          </a></p>
         </div>
       </div>
     </div>

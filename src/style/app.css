@@ -182,8 +182,13 @@ h5 {
 
 .footer {
     display: flex;
-    font-size: 8px;
     gap: 1.25em;
+}
+
+.footer p {
+    font-family: VT323;
+    font-size: 12pt;
+    line-height: 1em;
 }
 
 .pokemon-grid {
@@ -201,6 +206,16 @@ h5 {
 
 .my-label .nes-checkbox + span::before, .my-label .nes-checkbox:checked + span::before {
     top: 0em;
+}
+
+select {
+    font-family: "VT323";
+    font-size: 120%;
+    line-height: 1em;
+}
+
+.nes-select select {
+    border-width: 2px;
 }
 
 /* Mobile styles */
@@ -253,13 +268,17 @@ h5 {
 
     .footer p {
         margin-bottom: 0;
-        font-size: 6px;
+        font-size: 10pt;
+    }
+
+    .nes-container > :last-child {
+        margin-bottom: .5em;
     }
 }
 
 @media (-webkit-min-device-pixel-ratio: 0) and (-webkit-min-device-pixel-ratio: 0), (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
     /* Fixes an issue with seams appearing in the navbar item borders. */
-    .nes-input, .nes-textarea {
+    .nes-input, .nes-textarea, .nes-select select {
         border-image-repeat: unset;
     }
 }

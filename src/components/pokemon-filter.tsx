@@ -12,7 +12,6 @@ export default function PokemonFilter(props: {
     >
       <label style={{ fontSize: "0.7em", marginBottom: "0rem" }}>Filter by</label>
       <select
-        style={{ borderWidth: "2px", height: "40px", fontSize: "0.7em" }}
         value={props.filterBy}
         id="default_select"
         onChange={option => props.setFilterBy(option.target.value as SpriteFilterMethod)}
